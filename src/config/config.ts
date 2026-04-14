@@ -5,14 +5,14 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Carrega o .env da pasta pai (raiz do projeto)
+// Load .env from the parent folder (project root)
 dotenv.config({ path: path.resolve(__dirname, "../../../.env") });
 
 export const TRELLO_API_KEY = process.env.TRELLO_API_KEY;
 export const TRELLO_TOKEN = process.env.TRELLO_TOKEN;
 export const TRELLO_BASE_URL = process.env.TRELLO_BASE_URL;
 
-console.error("Tentando carregar .env de:", path.resolve(__dirname, "../../../.env"));
+console.error("Attempting to load .env from:", path.resolve(__dirname, "../../../.env"));
 console.error("Loaded env:", {
   TRELLO_API_KEY: TRELLO_API_KEY ? "***SET***" : "NOT SET",
   TRELLO_TOKEN: TRELLO_TOKEN ? "***SET***" : "NOT SET",
