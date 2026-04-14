@@ -9,6 +9,11 @@ const toolHandlers = createToolHandlers(trello);
 export const mcpServer = new Server({
     name: "trello-mcp-server",
     version: "1.0.0",
+}, {
+    capabilities: {
+        resources: {},
+        tools: {},
+    }
 });
 mcpServer.setRequestHandler(ListResourcesRequestSchema, async () => {
     try {
