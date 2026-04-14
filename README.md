@@ -138,9 +138,28 @@ Your AI agent will automatically "learn" these commands:
 ---
 
 ## 🐳 Docker Support
-If you prefer containers, you can build and run using Docker:
+
+For those who prefer containerized environments, you can run the Trello MCP Server using Docker. This avoids the need to install Node.js locally.
+
+### 1. Build the Docker Image
+From the project root, run:
 ```powershell
 docker build -t trello-mcp-server .
+```
+
+### 2. Run the Container
+You can pass your Trello credentials directly as environment variables:
+```powershell
+docker run --rm -i `
+  -e TRELLO_API_KEY=your_api_key `
+  -e TRELLO_TOKEN=your_token `
+  -e TRELLO_BASE_URL=https://api.trello.com/1 `
+  trello-mcp-server
+```
+
+### 3. Using an `.env` file with Docker
+If you already have a `.env` file configured:
+```powershell
 docker run --rm -i --env-file .env trello-mcp-server
 ```
 
