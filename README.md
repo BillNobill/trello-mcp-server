@@ -24,7 +24,6 @@ This project bridges the gap between AI and your Trello workflow. Instead of man
 ```powershell
 # Clone the repository
 git clone https://github.com/BillNobill/trello-mcp-server.git
-cd trello-mcp-server
 
 # Install dependencies and build
 npm install
@@ -42,7 +41,7 @@ TRELLO_BASE_URL=https://api.trello.com/1
 ### 3. Register with Gemini CLI (Global)
 To use this server anywhere on your computer, register it with the user scope:
 ```powershell
-gemini mcp add trello --command "node" --args "C:\FULL_PATH\TO\trello-mcp-server\dist\index.js" --scope user --trust
+gemini mcp add trello node "C:\FULL_PATH\TO\trello-mcp-server\dist\index.js" --scope user --trust
 ```
 
 > [!IMPORTANT]
