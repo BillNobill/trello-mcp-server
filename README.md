@@ -104,5 +104,5 @@ Contributions are welcome! If you find a bug or have a feature request, please o
 
 ---
 
-**Created by [Luiz Henrique Zavatini Feltrin](https://www.linkedin.com/in/luiz-henrique-zavatini-feltrin/)**  
+**Created by [Luiz Feltrin]**  
 *Show some love! Give this repository a ⭐️ if it helped you!*
