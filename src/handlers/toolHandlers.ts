@@ -166,5 +166,86 @@ export function createToolHandlers(trello: TrelloApi) {
         return { content: [{ type: "text", text: `Card renamed to ${name}.` }] };
       } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
     },
+
+    async handleGetListsOnBoard(args: any) {
+      try {
+        const { boardId } = args;
+        const lists = await trello.get(`/boards/${boardId}/lists`, { fields: "id,name,closed" });
+        return { content: [{ type: "text", text: JSON.stringify(lists.filter((l: any) => !l.closed).map((l: any) => ({ id: l.id, name: l.name })), null, 2) }] };
+      } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
+    },
+
+    async handleGetCardsInList(args: any) {
+      try {
+        const { listId } = args;
+        const cards = await trello.get(`/lists/${listId}/cards`, { fields: "id,name,closed,labels,idMembers,desc,due,start" });
+        return { content: [{ type: "text", text: JSON.stringify(cards.filter((c: any) => !c.closed).map((card: any) => ({
+          id: card.id,
+          name: card.name,
+          description: card.desc,
+          labels: card.labels.map((l: any) => ({ id: l.id, name: l.name, color: l.color })),
+          members: card.idMembers,
+          due: card.due,
+          start: card.start,
+        })), null, 2) }] };
+      } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
+    },
+
+    async handleGetCardsByDate(args: any) {
+      try {
+        const { boardId, since, before } = args;
+        const params: any = { fields: "id,name,closed,labels,idMembers,desc,due,start" };
+        if (since) params.since = since;
+        if (before) params.before = before;
+        const cards = await trello.get(`/boards/${boardId}/cards`, params);
+        return { content: [{ type: "text", text: JSON.stringify(cards.filter((c: any) => !c.closed).map((card: any) => ({
+          id: card.id,
+          name: card.name,
+          description: card.desc,
+          labels: card.labels.map((l: any) => ({ id: l.id, name: l.name, color: l.color })),
+          members: card.idMembers,
+          due: card.due,
+          start: card.start,
+        })), null, 2) }] };
+      } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
+    },
+
+    async handleGetMemberWorkload(args: any) {
+      try {
+        const { boardId, memberId } = args;
+        const cards = await trello.get(`/boards/${boardId}/cards`, { fields: "id,name,closed,labels,idMembers,desc,due,start" });
+        const memberCards = cards.filter((c: any) => !c.closed && c.idMembers.includes(memberId));
+        return { content: [{ type: "text", text: JSON.stringify(memberCards.map((card: any) => ({
+          id: card.id,
+          name: card.name,
+          description: card.desc,
+          labels: card.labels.map((l: any) => ({ id: l.id, name: l.name, color: l.color })),
+          members: card.idMembers,
+          due: card.due,
+          start: card.start,
+        })), null, 2) }] };
+      } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
+    },
+
+    async handleGetCardDetails(args: any) {
+      try {
+        const { cardId } = args;
+        const card = await trello.get(`/cards/${cardId}`, { 
+          fields: "all",
+          actions: "commentCard",
+          attachments: "true",
+          checklists: "all"
+        });
+        return { content: [{ type: "text", text: JSON.stringify(card, null, 2) }] };
+      } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
+    },
+
+    async handleSearchCards(args: any) {
+      try {
+        const { boardId, query } = args;
+        const results = await trello.get("/search", { query, idBoards: boardId, modelTypes: "cards", card_fields: "id,name,closed,labels,idMembers,desc,due,start" });
+        return { content: [{ type: "text", text: JSON.stringify(results.cards.filter((c: any) => !c.closed), null, 2) }] };
+      } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
+    },
   };
 }
