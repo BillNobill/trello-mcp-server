@@ -299,4 +299,74 @@ export const toolsMetadata = [
       required: ["cardId", "name"],
     },
   },
+  {
+    name: "get_lists_on_board",
+    description: "Lists only the names and IDs of the columns on a board",
+    inputSchema: {
+      type: "object",
+      properties: {
+        boardId: { type: "string", description: "ID of the board" },
+      },
+      required: ["boardId"],
+    },
+  },
+  {
+    name: "get_cards_in_list",
+    description: "Retrieves all cards within a specific list",
+    inputSchema: {
+      type: "object",
+      properties: {
+        listId: { type: "string", description: "ID of the list" },
+      },
+      required: ["listId"],
+    },
+  },
+  {
+    name: "get_cards_by_date",
+    description: "Filters cards by creation or due date across the entire board",
+    inputSchema: {
+      type: "object",
+      properties: {
+        boardId: { type: "string", description: "ID of the board" },
+        since: { type: "string", description: "ISO date string (optional), filter cards modified after this date" },
+        before: { type: "string", description: "ISO date string (optional), filter cards modified before this date" },
+      },
+      required: ["boardId"],
+    },
+  },
+  {
+    name: "get_member_workload",
+    description: "Finds all cards assigned to a specific member on a board",
+    inputSchema: {
+      type: "object",
+      properties: {
+        boardId: { type: "string", description: "ID of the board" },
+        memberId: { type: "string", description: "ID of the member" },
+      },
+      required: ["boardId", "memberId"],
+    },
+  },
+  {
+    name: "get_card_details",
+    description: "Fetches full details for a single card (comments, attachments, checklists)",
+    inputSchema: {
+      type: "object",
+      properties: {
+        cardId: { type: "string", description: "ID of the card" },
+      },
+      required: ["cardId"],
+    },
+  },
+  {
+    name: "search_cards",
+    description: "Performs a text-based search on the board",
+    inputSchema: {
+      type: "object",
+      properties: {
+        boardId: { type: "string", description: "ID of the board" },
+        query: { type: "string", description: "Search query" },
+      },
+      required: ["boardId", "query"],
+    },
+  },
 ];
