@@ -166,6 +166,24 @@ mcpServer.setRequestHandler(CallToolRequestSchema, async (request) => {
       case "update_card_name":
         result = await toolHandlers.handleUpdateCardName(args);
         break;
+      case "get_lists_on_board":
+        result = await toolHandlers.handleGetListsOnBoard(args);
+        break;
+      case "get_cards_in_list":
+        result = await toolHandlers.handleGetCardsInList(args);
+        break;
+      case "get_cards_by_date":
+        result = await toolHandlers.handleGetCardsByDate(args);
+        break;
+      case "get_member_workload":
+        result = await toolHandlers.handleGetMemberWorkload(args);
+        break;
+      case "get_card_details":
+        result = await toolHandlers.handleGetCardDetails(args);
+        break;
+      case "search_cards":
+        result = await toolHandlers.handleSearchCards(args);
+        break;
 
       default:
         throw new Error(`Tool "${name}" is not implemented`);
