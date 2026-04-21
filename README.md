@@ -55,11 +55,17 @@ Your AI agent will automatically "learn" these advanced capabilities:
 
 ### 📋 Board & List Management
 - `list_boards`: List all your Trello boards.
-- `read_board`: Deep dive into lists, cards, labels, and members.
+- `read_board`: Deep dive into lists, cards, labels, and members (**Note:** Heavy tool, use for global view).
+- `get_lists_on_board`: Fetch only column names and IDs (optimized for performance).
 - `create_list` / `archive_list`: Organize your board structure.
 - `get_board_labels` / `get_board_members`: Fetch IDs for precise automation.
 
-### 🗂️ Card Operations
+### 🗂️ Card Operations (Granular & Optimized)
+- `get_cards_in_list`: Fetch cards for a specific column (**Recommended** for active sprints).
+- `get_cards_by_date`: Filter board cards by creation/due dates.
+- `get_member_workload`: View all cards assigned to a specific teammate.
+- `get_card_details`: Deep dive into comments and attachments for a **single** card.
+- `search_cards`: Perform fast text-based searches across the entire board.
 - `create_card`: Create tasks with descriptions, labels, and due dates.
 - `update_card`: Modify existing cards (name, desc, dates, labels).
 - `move_card`: Change task status across lists.
