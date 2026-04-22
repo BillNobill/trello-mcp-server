@@ -52,8 +52,10 @@ export function createToolHandlers(trello: TrelloApi) {
 
     async handleCreateCard(args: any) {
       try {
-        const { listId, name, desc, idLabels, idMembers, due, start } = args;
-        const card = await trello.post("/cards", { idList: listId, name, desc, idLabels, idMembers, due, start });
+        const { listId, name, desc, idLabels, idMembers, due, start, pos } = args;
+        const params: any = { idList: listId, name, desc, idLabels, idMembers, due, start };
+        if (pos) params.pos = pos;
+        const card = await trello.post("/cards", params);
         return { content: [{ type: "text", text: JSON.stringify(card, null, 2) }] };
       } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
     },
@@ -79,6 +81,55 @@ export function createToolHandlers(trello: TrelloApi) {
       } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
     },
 
+    async handleUpdateChecklist(args: any) {
+      try {
+        const { checklistId, name, pos } = args;
+        const params: any = {};
+        if (name) params.name = name;
+        if (pos) params.pos = pos;
+        await trello.put(`/checklists/${checklistId}`, params);
+        return { content: [{ type: "text", text: `Checklist ${checklistId} updated.` }] };
+      } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
+    },
+
+    async handleDeleteChecklist(args: any) {
+      try {
+        const { checklistId } = args;
+        await trello.delete(`/checklists/${checklistId}`);
+        return { content: [{ type: "text", text: `Checklist ${checklistId} deleted.` }] };
+      } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
+    },
+
+    async handleCreateCheckItem(args: any) {
+      try {
+        const { checklistId, name, pos } = args;
+        const params: any = { name };
+        if (pos) params.pos = pos;
+        await trello.post(`/checklists/${checklistId}/checkItems`, params);
+        return { content: [{ type: "text", text: `Item '${name}' added to checklist.` }] };
+      } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
+    },
+
+    async handleUpdateCheckItem(args: any) {
+      try {
+        const { cardId, checkItemId, name, state, pos } = args;
+        const params: any = {};
+        if (name) params.name = name;
+        if (state) params.state = state;
+        if (pos) params.pos = pos;
+        await trello.put(`/cards/${cardId}/checkItem/${checkItemId}`, params);
+        return { content: [{ type: "text", text: `Check item ${checkItemId} updated.` }] };
+      } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
+    },
+
+    async handleDeleteCheckItem(args: any) {
+      try {
+        const { checklistId, checkItemId } = args;
+        await trello.delete(`/checklists/${checklistId}/checkItems/${checkItemId}`);
+        return { content: [{ type: "text", text: `Item ${checkItemId} deleted.` }] };
+      } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
+    },
+
     async handleAddAttachment(args: any) {
       try {
         const { cardId, url, name } = args;
@@ -89,17 +140,21 @@ export function createToolHandlers(trello: TrelloApi) {
 
     async handleCreateList(args: any) {
       try {
-        const { boardId, name } = args;
-        const list = await trello.post("/lists", { idBoard: boardId, name });
+        const { boardId, name, pos } = args;
+        const params: any = { idBoard: boardId, name };
+        if (pos) params.pos = pos;
+        const list = await trello.post("/lists", params);
         return { content: [{ type: "text", text: JSON.stringify(list, null, 2) }] };
       } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
     },
 
     async handleMoveCard(args: any) {
       try {
-        const { cardId, listId } = args;
-        await trello.put(`/cards/${cardId}`, { idList: listId });
-        return { content: [{ type: "text", text: `Card moved to list ${listId}` }] };
+        const { cardId, listId, pos } = args;
+        const params: any = { idList: listId };
+        if (pos) params.pos = pos;
+        await trello.put(`/cards/${cardId}`, params);
+        return { content: [{ type: "text", text: `Card moved successfully.` }] };
       } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
     },
 
@@ -135,17 +190,20 @@ export function createToolHandlers(trello: TrelloApi) {
       } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
     },
 
-    async handleUpdateListName(args: any) {
+    async handleUpdateList(args: any) {
       try {
-        const { listId, name } = args;
-        await trello.put(`/lists/${listId}`, { name });
-        return { content: [{ type: "text", text: `List renamed to ${name}.` }] };
+        const { listId, name, pos } = args;
+        const params: any = {};
+        if (name) params.name = name;
+        if (pos) params.pos = pos;
+        await trello.put(`/lists/${listId}`, params);
+        return { content: [{ type: "text", text: `List updated successfully.` }] };
       } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
     },
 
     async handleUpdateCard(args: any) {
       try {
-        const { cardId, name, desc, idLabels, due, start, idMembers } = args;
+        const { cardId, name, desc, idLabels, due, start, idMembers, pos } = args;
         const updateData: any = {};
         if (name) updateData.name = name;
         if (desc) updateData.desc = desc;
@@ -153,8 +211,9 @@ export function createToolHandlers(trello: TrelloApi) {
         if (due) updateData.due = due;
         if (start) updateData.start = start;
         if (idMembers) updateData.idMembers = idMembers;
+        if (pos) updateData.pos = pos;
 
-        const card = await trello.put(`/cards/${cardId}`, updateData);
+        await trello.put(`/cards/${cardId}`, updateData);
         return { content: [{ type: "text", text: `Card ${cardId} updated successfully.` }] };
       } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
     },
@@ -245,6 +304,49 @@ export function createToolHandlers(trello: TrelloApi) {
         const { boardId, query } = args;
         const results = await trello.get("/search", { query, idBoards: boardId, modelTypes: "cards", card_fields: "id,name,closed,labels,idMembers,desc,due,start" });
         return { content: [{ type: "text", text: JSON.stringify(results.cards.filter((c: any) => !c.closed), null, 2) }] };
+      } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
+    },
+
+    async handleCreateLabel(args: any) {
+      try {
+        const { boardId, name, color } = args;
+        const label = await trello.post("/labels", { idBoard: boardId, name, color });
+        return { content: [{ type: "text", text: JSON.stringify(label, null, 2) }] };
+      } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
+    },
+
+    async handleUpdateLabel(args: any) {
+      try {
+        const { labelId, name, color } = args;
+        const params: any = {};
+        if (name) params.name = name;
+        if (color) params.color = color;
+        const label = await trello.put(`/labels/${labelId}`, params);
+        return { content: [{ type: "text", text: JSON.stringify(label, null, 2) }] };
+      } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
+    },
+
+    async handleMoveAllCards(args: any) {
+      try {
+        const { boardId, idListSource, idListDest } = args;
+        await trello.post(`/lists/${idListSource}/moveAllCards`, { idBoard: boardId, idList: idListDest });
+        return { content: [{ type: "text", text: `All cards moved from ${idListSource} to ${idListDest}.` }] };
+      } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
+    },
+
+    async handleUploadFile(args: any) {
+      try {
+        const { cardId, filePath, name } = args;
+        const attachment = await trello.uploadFile(cardId, filePath, name);
+        return { content: [{ type: "text", text: `File uploaded successfully: ${attachment.id}` }] };
+      } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
+    },
+
+    async handleSetCustomField(args: any) {
+      try {
+        const { cardId, customFieldId, value } = args;
+        await trello.put(`/cards/${cardId}/customField/${customFieldId}/item`, { value: { text: value } });
+        return { content: [{ type: "text", text: `Custom field ${customFieldId} updated for card ${cardId}.` }] };
       } catch (error) { return { content: [{ type: "text", text: `Error: ${error}` }], isError: true }; }
     },
   };

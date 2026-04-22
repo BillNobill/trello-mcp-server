@@ -110,6 +110,21 @@ mcpServer.setRequestHandler(CallToolRequestSchema, async (request) => {
             case "add_checklist":
                 result = await toolHandlers.handleAddChecklist(args);
                 break;
+            case "update_checklist":
+                result = await toolHandlers.handleUpdateChecklist(args);
+                break;
+            case "delete_checklist":
+                result = await toolHandlers.handleDeleteChecklist(args);
+                break;
+            case "create_checkitem":
+                result = await toolHandlers.handleCreateCheckItem(args);
+                break;
+            case "update_checkitem":
+                result = await toolHandlers.handleUpdateCheckItem(args);
+                break;
+            case "delete_checkitem":
+                result = await toolHandlers.handleDeleteCheckItem(args);
+                break;
             case "add_attachment":
                 result = await toolHandlers.handleAddAttachment(args);
                 break;
@@ -128,8 +143,8 @@ mcpServer.setRequestHandler(CallToolRequestSchema, async (request) => {
             case "delete_board":
                 result = await toolHandlers.handleDeleteBoard(args);
                 break;
-            case "update_list_name":
-                result = await toolHandlers.handleUpdateListName(args);
+            case "update_list":
+                result = await toolHandlers.handleUpdateList(args);
                 break;
             case "update_card":
                 result = await toolHandlers.handleUpdateCard(args);
@@ -154,6 +169,21 @@ mcpServer.setRequestHandler(CallToolRequestSchema, async (request) => {
                 break;
             case "search_cards":
                 result = await toolHandlers.handleSearchCards(args);
+                break;
+            case "create_label":
+                result = await toolHandlers.handleCreateLabel(args);
+                break;
+            case "update_label":
+                result = await toolHandlers.handleUpdateLabel(args);
+                break;
+            case "move_all_cards":
+                result = await toolHandlers.handleMoveAllCards(args);
+                break;
+            case "upload_file":
+                result = await toolHandlers.handleUploadFile(args);
+                break;
+            case "set_custom_field":
+                result = await toolHandlers.handleSetCustomField(args);
                 break;
             default:
                 throw new Error(`Tool "${name}" is not implemented`);

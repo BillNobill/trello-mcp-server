@@ -55,27 +55,42 @@ Your AI agent will automatically "learn" these advanced capabilities:
 
 ### 📋 Board & List Management
 - `list_boards`: List all your Trello boards.
-- `read_board`: Deep dive into lists, cards, labels, and members (**Note:** Heavy tool, use for global view).
-- `get_lists_on_board`: Fetch only column names and IDs (optimized for performance).
-- `create_list` / `archive_list`: Organize your board structure.
+- `read_board`: Deep dive into lists, cards, labels, and members.
+- `get_lists_on_board`: Fetch only column names and IDs.
+- `create_list` / `update_list`: Manage board columns and their ordering (`pos`).
+- `archive_list`: Cleanup board structure.
 - `get_board_labels` / `get_board_members`: Fetch IDs for precise automation.
+- `create_label` / `update_label`: Manage board labels (names and colors).
 
 ### 🗂️ Card Operations (Granular & Optimized)
-- `get_cards_in_list`: Fetch cards for a specific column (**Recommended** for active sprints).
-- `get_cards_by_date`: Filter board cards by creation/due dates.
-- `get_member_workload`: View all cards assigned to a specific teammate.
-- `get_card_details`: Deep dive into comments and attachments for a **single** card.
+- `get_cards_in_list`: Fetch cards for a specific column.
+- `get_card_details`: Deep dive into comments, attachments, and checklists for a **single** card.
 - `search_cards`: Perform fast text-based searches across the entire board.
-- `create_card`: Create tasks with descriptions, labels, and due dates.
-- `update_card`: Modify existing cards (name, desc, dates, labels).
-- `move_card`: Change task status across lists.
+- `create_card` / `update_card`: Create or modify tasks (name, desc, dates, labels, and `pos`).
+- `move_card`: Change task status across lists (supports `pos`).
+- `move_all_cards`: **Bulk Action** to move all cards from one list to another.
 - `archive_card`: Cleanup completed work.
 
-### 👥 Collaboration & Details
-- `assign_member`: Assign teammates to specific cards.
-- `add_checklist`: Create **checklists (selection boxes)** with multiple items.
-- `add_attachment`: Attach documentation or relevant links to cards.
+### ✅ Checklist Management (Granular & Fluid)
+- `add_checklist`: Create a new checklist header on a card.
+- `update_checklist`: Rename or reorder an existing checklist header.
+- `delete_checklist`: Remove a checklist entirely.
+- `create_checkitem`: Add a new item to an existing checklist.
+- `update_checkitem`: **Update items** (rename, mark as complete/incomplete, or reorder).
+- `delete_checkitem`: Remove a specific item from a checklist.
+
+### 📁 Files & Attachments
+- `add_attachment`: Attach URL-based links to cards.
+- `upload_file`: **Upload real files** (PDFs, scripts, reports) directly from your computer to a card.
+
+### 🛠️ Professional Features
+- `set_custom_field`: Set values for Custom Fields (e.g., "Estimate", "Project ID"). *Note: Requires Custom Fields Power-Up enabled on the board.*
+- `assign_member`: Assign teammates to tasks.
 - `add_comment`: Discuss tasks directly through the AI.
+
+> [!TIP]
+> **Reordering (the `pos` parameter):**  
+> Use `'top'`, `'bottom'`, or a positive number (e.g., `1`) to precisely reorder cards, lists, checklists, and items.
 
 ---
 
