@@ -1,7 +1,7 @@
 export const toolsMetadata = [
   {
     name: "list_boards",
-    description: "List all open Trello boards",
+    description: "List all open Trello boards. Returns a JSON array of board objects with 'id' and 'name'.",
     inputSchema: {
       type: "object",
       properties: {},
@@ -10,7 +10,7 @@ export const toolsMetadata = [
   },
   {
     name: "read_board",
-    description: "Read lists and cards from a specific board",
+    description: "Read lists and cards from a specific board. Returns a structured JSON object containing all open lists and their cards.",
     inputSchema: {
       type: "object",
       properties: {
@@ -24,7 +24,7 @@ export const toolsMetadata = [
   },
   {
     name: "get_board_labels",
-    description: "Get all labels defined in a board (useful for getting label IDs)",
+    description: "Get all labels defined in a board. Returns a JSON array of label objects (id, name, color).",
     inputSchema: {
       type: "object",
       properties: {
@@ -38,7 +38,7 @@ export const toolsMetadata = [
   },
   {
     name: "get_board_members",
-    description: "Get all members of a board (useful for getting member IDs)",
+    description: "Get all members of a board. Returns a JSON array of member objects (id, fullName, username).",
     inputSchema: {
       type: "object",
       properties: {
@@ -52,7 +52,7 @@ export const toolsMetadata = [
   },
   {
     name: "create_list",
-    description: "Create a new list in a specific board",
+    description: "Create a new list in a specific board. Returns the created list JSON object.",
     inputSchema: {
       type: "object",
       properties: {
@@ -74,7 +74,7 @@ export const toolsMetadata = [
   },
   {
     name: "create_card",
-    description: "Create a new card with support for labels, dates and members",
+    description: "Create a new card with support for labels, dates and members. Returns the created card JSON object.",
     inputSchema: {
       type: "object",
       properties: {
@@ -116,7 +116,7 @@ export const toolsMetadata = [
   },
   {
     name: "assign_member",
-    description: "Assign a member to an existing card",
+    description: "Assign a member to an existing card.",
     inputSchema: {
       type: "object",
       properties: {
@@ -134,7 +134,7 @@ export const toolsMetadata = [
   },
   {
     name: "add_checklist",
-    description: "Add a new checklist to a card",
+    description: "Add a new checklist to a card. 'items' can be a comma-separated list of item names.",
     inputSchema: {
       type: "object",
       properties: {
@@ -147,7 +147,7 @@ export const toolsMetadata = [
   },
   {
     name: "update_checklist",
-    description: "Update a checklist header (rename or move)",
+    description: "Update a checklist header (rename or move).",
     inputSchema: {
       type: "object",
       properties: {
@@ -160,7 +160,7 @@ export const toolsMetadata = [
   },
   {
     name: "delete_checklist",
-    description: "Remove a checklist from a card",
+    description: "Remove a checklist from a card.",
     inputSchema: {
       type: "object",
       properties: {
@@ -171,7 +171,7 @@ export const toolsMetadata = [
   },
   {
     name: "create_checkitem",
-    description: "Add a new item to an existing checklist",
+    description: "Add a new item to an existing checklist.",
     inputSchema: {
       type: "object",
       properties: {
@@ -184,7 +184,7 @@ export const toolsMetadata = [
   },
   {
     name: "update_checkitem",
-    description: "Update an existing check item (rename, state, or position)",
+    description: "Update an existing check item (rename, state, or position).",
     inputSchema: {
       type: "object",
       properties: {
@@ -199,7 +199,7 @@ export const toolsMetadata = [
   },
   {
     name: "delete_checkitem",
-    description: "Remove an item from a checklist",
+    description: "Remove an item from a checklist.",
     inputSchema: {
       type: "object",
       properties: {
@@ -211,7 +211,7 @@ export const toolsMetadata = [
   },
   {
     name: "add_attachment",
-    description: "Add a link attachment to a card (e.g., documentation link)",
+    description: "Add a link attachment (URL) to a card.",
     inputSchema: {
       type: "object",
       properties: {
@@ -233,7 +233,7 @@ export const toolsMetadata = [
   },
   {
     name: "move_card",
-    description: "Move a card to a different list and/or position",
+    description: "Move a card to a different list and/or position within a board.",
     inputSchema: {
       type: "object",
       properties: {
@@ -255,7 +255,7 @@ export const toolsMetadata = [
   },
   {
     name: "add_comment",
-    description: "Add a comment to a card",
+    description: "Add a comment to a card.",
     inputSchema: {
       type: "object",
       properties: {
@@ -273,7 +273,7 @@ export const toolsMetadata = [
   },
   {
     name: "archive_card",
-    description: "Archive a card",
+    description: "Archive a Trello card (sets closed to true).",
     inputSchema: {
       type: "object",
       properties: {
@@ -287,7 +287,7 @@ export const toolsMetadata = [
   },
   {
     name: "archive_list",
-    description: "Archive a list",
+    description: "Archive a Trello list (sets closed to true).",
     inputSchema: {
       type: "object",
       properties: {
@@ -301,7 +301,7 @@ export const toolsMetadata = [
   },
   {
     name: "delete_board",
-    description: "Delete a board",
+    description: "Permanently delete a Trello board.",
     inputSchema: {
       type: "object",
       properties: {
@@ -315,7 +315,7 @@ export const toolsMetadata = [
   },
   {
     name: "update_list",
-    description: "Update list details (name, position)",
+    description: "Update list details like name or position.",
     inputSchema: {
       type: "object",
       properties: {
@@ -337,7 +337,7 @@ export const toolsMetadata = [
   },
   {
     name: "update_card",
-    description: "Update card details (name, description, labels, dates, position)",
+    description: "Update card details including name, description, labels, dates, and position.",
     inputSchema: {
       type: "object",
       properties: {
@@ -355,7 +355,7 @@ export const toolsMetadata = [
   },
   {
     name: "update_card_name",
-    description: "Update a card name",
+    description: "Shorthand to update only a card's name.",
     inputSchema: {
       type: "object",
       properties: {
@@ -373,7 +373,7 @@ export const toolsMetadata = [
   },
   {
     name: "create_label",
-    description: "Create a new label on a board",
+    description: "Create a new label on a board. Colors: yellow, purple, blue, red, green, orange, black, sky, pink, lime.",
     inputSchema: {
       type: "object",
       properties: {
@@ -381,7 +381,7 @@ export const toolsMetadata = [
         name: { type: "string", description: "Name of the label" },
         color: { 
           type: "string", 
-          description: "Color of the label: yellow, purple, blue, red, green, orange, black, sky, pink, lime, null (for no color)" 
+          description: "Color of the label." 
         },
       },
       required: ["boardId", "name", "color"],
@@ -389,7 +389,7 @@ export const toolsMetadata = [
   },
   {
     name: "update_label",
-    description: "Update a label's name or color",
+    description: "Update a label's name or color.",
     inputSchema: {
       type: "object",
       properties: {
@@ -405,7 +405,7 @@ export const toolsMetadata = [
   },
   {
     name: "move_all_cards",
-    description: "Move all cards from one list to another (Bulk Action)",
+    description: "Bulk Action: Move all cards from one list to another within the same board.",
     inputSchema: {
       type: "object",
       properties: {
@@ -418,7 +418,7 @@ export const toolsMetadata = [
   },
   {
     name: "upload_file",
-    description: "Upload a local file directly to a card as an attachment",
+    description: "Upload a local file directly to a card as an attachment. Requires an absolute file path.",
     inputSchema: {
       type: "object",
       properties: {
@@ -431,20 +431,20 @@ export const toolsMetadata = [
   },
   {
     name: "set_custom_field",
-    description: "Set a value for a custom field on a card (Requires Custom Fields Power-Up)",
+    description: "Set a text value for a custom field on a card. Requires the Custom Fields Power-Up.",
     inputSchema: {
       type: "object",
       properties: {
         cardId: { type: "string", description: "ID of the card" },
         customFieldId: { type: "string", description: "ID of the custom field" },
-        value: { type: "string", description: "Value to set (text, number, date, etc.)" },
+        value: { type: "string", description: "Text value to set" },
       },
       required: ["cardId", "customFieldId", "value"],
     },
   },
   {
     name: "get_lists_on_board",
-    description: "Lists only the names and IDs of the columns on a board",
+    description: "Fetch only the names and IDs of columns on a board. Returns a JSON array.",
     inputSchema: {
       type: "object",
       properties: {
@@ -455,7 +455,7 @@ export const toolsMetadata = [
   },
   {
     name: "get_cards_in_list",
-    description: "Retrieves all cards within a specific list",
+    description: "Retrieves all cards within a specific list. Returns a JSON array of cards with basic fields.",
     inputSchema: {
       type: "object",
       properties: {
@@ -466,20 +466,20 @@ export const toolsMetadata = [
   },
   {
     name: "get_cards_by_date",
-    description: "Filters cards by creation or due date across the entire board",
+    description: "Filter cards across a board by modification date (since/before). Returns a JSON array.",
     inputSchema: {
       type: "object",
       properties: {
         boardId: { type: "string", description: "ID of the board" },
-        since: { type: "string", description: "ISO date string (optional), filter cards modified after this date" },
-        before: { type: "string", description: "ISO date string (optional), filter cards modified before this date" },
+        since: { type: "string", description: "ISO date string (optional), modified after" },
+        before: { type: "string", description: "ISO date string (optional), modified before" },
       },
       required: ["boardId"],
     },
   },
   {
     name: "get_member_workload",
-    description: "Finds all cards assigned to a specific member on a board",
+    description: "Finds all open cards assigned to a specific member on a board. Returns a JSON array.",
     inputSchema: {
       type: "object",
       properties: {
@@ -491,7 +491,7 @@ export const toolsMetadata = [
   },
   {
     name: "get_card_details",
-    description: "Fetches full details for a single card (comments, attachments, checklists)",
+    description: "Fetches full card details including comments, attachments, and checklists. Returns a JSON object.",
     inputSchema: {
       type: "object",
       properties: {
@@ -502,12 +502,12 @@ export const toolsMetadata = [
   },
   {
     name: "search_cards",
-    description: "Performs a text-based search on the board",
+    description: "Performs a text-based search for cards across a board. Returns a JSON array of matching cards.",
     inputSchema: {
       type: "object",
       properties: {
         boardId: { type: "string", description: "ID of the board" },
-        query: { type: "string", description: "Search query" },
+        query: { type: "string", description: "Search query string" },
       },
       required: ["boardId", "query"],
     },

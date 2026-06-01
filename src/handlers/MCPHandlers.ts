@@ -23,7 +23,7 @@ const toolHandlers = createToolHandlers(trello);
 
 export const mcpServer = new Server({
   name: "trello-mcp-server",
-  version: "1.0.0",
+  version: "1.1.0",
 }, {
   capabilities: {
     resources: {},
@@ -112,7 +112,7 @@ mcpServer.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
 
   try {
-    let result;
+    let result: any;
 
     switch (name) {
       case "list_boards":
@@ -219,7 +219,11 @@ mcpServer.setRequestHandler(CallToolRequestSchema, async (request) => {
         throw new Error(`Tool "${name}" is not implemented`);
     }
 
-    return result;
+    // Ensure result is properly formatted for MCP
+    return {
+      content: result.content || [],
+      isError: !!result.isError,
+    };
   } catch (e) {
     console.error(`Error in tool handler for ${name}:`, e);
     return {
@@ -233,6 +237,7 @@ mcpServer.setRequestHandler(CallToolRequestSchema, async (request) => {
           }`,
         },
       ],
+      isError: true,
     };
   }
 });
