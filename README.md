@@ -38,14 +38,54 @@ TRELLO_TOKEN=your_token
 TRELLO_BASE_URL=https://api.trello.com/1
 ```
 
-### 3. Register with Gemini CLI (Global)
-To use this server anywhere on your computer, register it with the user scope:
+### 3. Register with your AI client
+
+#### Claude Code (Recommended)
 ```powershell
-gemini mcp add trello node "C:\FULL_PATH\TO\trello-mcp-server\dist\index.js" --scope user --trust
+claude mcp add --scope user trello node "C:\FULL_PATH\TO\trello-mcp-server\dist\index.js"
+```
+Env vars are read from the `.env` file or can be passed inline with `-e KEY=VALUE` flags.
+
+#### VS Code (GitHub Copilot / Claude extension)
+Add to your user `settings.json` (`Ctrl+Shift+P` → *Open User Settings JSON*):
+```json
+{
+  "mcp": {
+    "servers": {
+      "trello": {
+        "command": "node",
+        "args": ["C:\\FULL_PATH\\TO\\trello-mcp-server\\dist\\index.js"],
+        "env": {
+          "TRELLO_API_KEY": "your_api_key",
+          "TRELLO_TOKEN": "your_token",
+          "TRELLO_BASE_URL": "https://api.trello.com/1"
+        }
+      }
+    }
+  }
+}
+```
+
+#### Cursor
+Add to `%USERPROFILE%\.cursor\mcp.json`:
+```json
+{
+  "mcpServers": {
+    "trello": {
+      "command": "node",
+      "args": ["C:\\FULL_PATH\\TO\\trello-mcp-server\\dist\\index.js"],
+      "env": {
+        "TRELLO_API_KEY": "your_api_key",
+        "TRELLO_TOKEN": "your_token",
+        "TRELLO_BASE_URL": "https://api.trello.com/1"
+      }
+    }
+  }
+}
 ```
 
 > [!IMPORTANT]
-> Always use the **absolute path** to `dist/index.js` in the command above.
+> Always use the **absolute path** to `dist/index.js` in the configuration above.
 
 ---
 
@@ -98,9 +138,10 @@ Your AI agent will automatically "learn" these advanced capabilities:
 
 > [!WARNING]
 > **Server shows as "Disconnected"?**
-> 1. **Empty Command:** If `/mcp list` shows a red dot, ensure your `settings.json` (at `C:\Users\YourUser\.gemini\settings.json`) has `"command": "node"` correctly set.
-> 2. **Environment Variables:** Run `node dist/index.js` manually. If it fails, your `.env` is likely missing from the root folder.
-> 3. **SDK Compatibility:** This project uses `@modelcontextprotocol/sdk` v1.29.0. If you experience protocol errors, run `npm install` to ensure you have the latest version.
+> 1. **Empty Command:** Check your client's MCP config and confirm `"command": "node"` and the absolute path to `dist/index.js` are correct.
+> 2. **Environment Variables:** Run `node dist/index.js` manually in the terminal. If it fails, your `.env` is likely missing from the root folder.
+> 3. **SDK Compatibility:** This project uses `@modelcontextprotocol/sdk` v1.29.0. If you experience protocol errors, run `npm install` to ensure you have the correct version.
+> 4. **Claude Code:** Run `/mcp` inside a Claude Code session to see the server status and any error output.
 
 ---
 
